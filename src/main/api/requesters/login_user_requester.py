@@ -2,7 +2,6 @@ import json
 from http import HTTPStatus
 import allure
 import requests
-
 from main.api.models.admin_login_request import AdminLoginRequestModel
 from main.api.models.login_user_request import LoginUserRequestModel
 from main.api.models.login_user_response import LoginUserResponseModel
