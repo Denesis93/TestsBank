@@ -7,6 +7,7 @@ from main.api.specs.response_specs import ResponseSpecs
 
 @pytest.mark.api
 class TestCreateCreditAccount:
+
     """Тест создания кредитного банковского счёта с валидными данными"""
 
     def test_create_credit_account(self, create_credit_user, request_spec_credit_user):
@@ -16,6 +17,7 @@ class TestCreateCreditAccount:
             request_spec=request_spec_credit_user,
             response_spec=ResponseSpecs.created_status(),
         ).post(None)
+
         assert response_create_credit_account.id > 0
         assert response_create_credit_account.balance == 0
         assert response_create_credit_account.number

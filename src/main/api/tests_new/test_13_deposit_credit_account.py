@@ -1,29 +1,21 @@
 import pytest
+from constants import AMOUNT_DEPOSIT
 from main.api.models.deposit_request import DepositRequestModel
-from main.api.requesters.create_account_requester import CreateAccountPostBaseRequester
 from main.api.requesters.deposit_requester import DepositPostBaseRequester
 from main.api.specs.response_specs import ResponseSpecs
 
 """Тесты пополнения кредитного счёта"""
 
-
 @pytest.mark.api
 class TestDepositCreditAcc:
+
     """Тест пополнения кредитного счёта валидными данными"""
 
-    def test_deposit_credit_acc(self, create_credit_user, request_spec_credit_user):
-
-        # отправка запроса на создание банковского счёта
-        response_create_account = CreateAccountPostBaseRequester(
-            request_spec=request_spec_credit_user,
-            response_spec=ResponseSpecs.created_status(),
-        ).post(None)
+    def test_deposit_credit_acc(self, create_credit_user, request_spec_credit_user, create_credit_account):
 
         # тело для запроса на пополнение счёта
         # Сумма пополнения (deposit) - минимально 1000, максимально - 9000
-        account_id = response_create_account.id
-        amount = 4444
-        payload_deposit = DepositRequestModel(accountId=account_id, amount=amount)
+        payload_deposit = DepositRequestModel(accountId=create_credit_account.id, amount=AMOUNT_DEPOSIT)
 
         # отправка запроса на пополнение счёта
         response_deposit = DepositPostBaseRequester(
@@ -31,26 +23,19 @@ class TestDepositCreditAcc:
             response_spec=ResponseSpecs.ok_status(),
         ).post(payload_deposit)
 
-        assert response_deposit.balance == amount
-        assert response_deposit.id == account_id
+        assert response_deposit.balance == AMOUNT_DEPOSIT
+        assert response_deposit.id == create_credit_account.id
 
     """Тест пополнения счёта с невалидными данными (пополнение на сумму вне допустимого диапазона)"""
 
-    @pytest.mark.parametrize("amount", [999.99, 9000.01])
+    @pytest.mark.parametrize("amount_deposit_invalid", [999.99, 9000.01])
     def test_deposit_invalid(
-        self, create_credit_user, request_spec_credit_user, amount
+        self, create_credit_user, request_spec_credit_user, amount_deposit_invalid, create_credit_account
     ):
-
-        # отправка запроса на создание банковского счёта
-        response_create_account = CreateAccountPostBaseRequester(
-            request_spec=request_spec_credit_user,
-            response_spec=ResponseSpecs.created_status(),
-        ).post(None)
 
         # тело для запроса на пополнение счёта
         # Сумма пополнения (deposit) - минимально 1000, максимально - 9000
-        account_id = response_create_account.id
-        payload_deposit = DepositRequestModel(accountId=account_id, amount=amount)
+        payload_deposit = DepositRequestModel(accountId=create_credit_account.id, amount=amount_deposit_invalid)
 
         # отправка запроса на пополнение счёта
         response_deposit = DepositPostBaseRequester(

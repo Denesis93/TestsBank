@@ -10,18 +10,12 @@ from main.api.specs.response_specs import ResponseSpecs
 class TestCreateCreditUser:
     """Тест создания кредитного юзера с валидными данными"""
 
-    def test_create_credit_user(self, credit_user_data, request_spec_admin):
-        # тело запроса, передающееся через модель
-        payload = CreateUserRequestModel(
-            username=credit_user_data["username"],
-            password=credit_user_data["password"],
-            role=credit_user_data["role"],
-        )
+    def test_create_credit_user(self, credit_user_data, request_spec_admin, payload_create_credit_user):
 
         # отправка запроса на создание кредитного юзера
         response_create_user = CreateUserPostBaseRequester(
             request_spec=request_spec_admin, response_spec=ResponseSpecs.ok_status()
-        ).post(payload)
+        ).post(payload_create_credit_user)
 
         assert response_create_user.role == credit_user_data["role"]
         assert response_create_user.id > 0
