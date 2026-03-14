@@ -9,14 +9,17 @@ from main.api.specs.response_specs import ResponseSpecs
 
 @pytest.mark.api
 class TestRequestCredit:
-
     """Тест запроса кредита с валидными данными"""
 
-    def test_request_credit(self, create_credit_user, request_spec_credit_user, create_credit_account):
+    def test_request_credit(
+        self, create_credit_user, request_spec_credit_user, create_credit_account
+    ):
 
         # тело запроса на получение кредита
         payload_request_credit = RequestCreditRequestModel(
-            accountId=create_credit_account.id, amount=CREDIT_AMOUNT, termMonths=TERM_MONTHS
+            accountId=create_credit_account.id,
+            amount=CREDIT_AMOUNT,
+            termMonths=TERM_MONTHS,
         )
 
         # отправка запроса на получение кредита
@@ -31,14 +34,17 @@ class TestRequestCredit:
         assert response_request_credit.term_months == TERM_MONTHS
         assert response_request_credit.balance == CREDIT_AMOUNT
 
-
     """Тест запроса кредита с невалидными данными (запрос второго кредита на один счёт)"""
 
-    def test_request_credit_invalid(self, create_credit_user, request_spec_credit_user, create_credit_account):
+    def test_request_credit_invalid(
+        self, create_credit_user, request_spec_credit_user, create_credit_account
+    ):
 
         # тело запроса на получение кредита
         payload_request_credit = RequestCreditRequestModel(
-            accountId=create_credit_account.id, amount=CREDIT_AMOUNT, termMonths=TERM_MONTHS
+            accountId=create_credit_account.id,
+            amount=CREDIT_AMOUNT,
+            termMonths=TERM_MONTHS,
         )
 
         # отправка запроса на получение первого кредита

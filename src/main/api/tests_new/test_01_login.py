@@ -11,7 +11,6 @@ from main.api.specs.response_specs import ResponseSpecs
 
 @pytest.mark.api
 class TestLogin:
-
     """Тест логина под админом"""
 
     def test_admin_login(self):

@@ -10,7 +10,9 @@ from main.api.specs.response_specs import ResponseSpecs
 class TestCreateCreditUser:
     """Тест создания кредитного юзера с валидными данными"""
 
-    def test_create_credit_user(self, credit_user_data, request_spec_admin, payload_create_credit_user):
+    def test_create_credit_user(
+        self, credit_user_data, request_spec_admin, payload_create_credit_user
+    ):
 
         # отправка запроса на создание кредитного юзера
         response_create_user = CreateUserPostBaseRequester(

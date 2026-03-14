@@ -1,5 +1,9 @@
 import pytest
-from constants import AMOUNT_DEPOSIT_DONOR, AMOUNT_TO_TRANSFER, AMOUNT_TO_TRANSFER_INVALID
+from constants import (
+    AMOUNT_DEPOSIT_DONOR,
+    AMOUNT_TO_TRANSFER,
+    AMOUNT_TO_TRANSFER_INVALID,
+)
 from main.api.models.transfer_request import TransferRequestModel
 from main.api.requesters.transfer_requester import TransferPostBaseRequester
 from main.api.specs.response_specs import ResponseSpecs
@@ -9,7 +13,6 @@ from main.api.specs.response_specs import ResponseSpecs
 
 @pytest.mark.api
 class TestTransferToOtherAcc:
-
     """Тест перевода денежных средств на чужой банковский счёт с валидными данными"""
 
     def test_transfer_to_other_acc(
@@ -21,14 +24,18 @@ class TestTransferToOtherAcc:
         create_user_2,
         request_spec_user,
         request_spec_user_2,
-    create_account, create_account_2, deposit_account):
-
+        create_account,
+        create_account_2,
+        deposit_account,
+    ):
 
         # тело для запроса на перевод денежных средств
         # Сумма перевода - минимально 500, максимум - 10000
         # amount_to_transfer = 3333.44
         transfer_payload = TransferRequestModel(
-            fromAccountId=create_account.id, toAccountId=create_account_2.id, amount=AMOUNT_TO_TRANSFER
+            fromAccountId=create_account.id,
+            toAccountId=create_account_2.id,
+            amount=AMOUNT_TO_TRANSFER,
         )
 
         # отправка запроса на перевод денежных средств
@@ -54,13 +61,18 @@ class TestTransferToOtherAcc:
         create_user_2,
         request_spec_user,
         request_spec_user_2,
-    create_account, create_account_2, deposit_account):
+        create_account,
+        create_account_2,
+        deposit_account,
+    ):
 
         # тело для запроса на перевод денежных средств
         # Сумма перевода - минимально 500, максимум - 10000
         # amount_to_transfer = 8888.01
         transfer_payload = TransferRequestModel(
-            fromAccountId=create_account.id, toAccountId=create_account_2.id, amount=AMOUNT_TO_TRANSFER_INVALID
+            fromAccountId=create_account.id,
+            toAccountId=create_account_2.id,
+            amount=AMOUNT_TO_TRANSFER_INVALID,
         )
 
         # отправка запроса на перевод денежных средств

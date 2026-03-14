@@ -1,0 +1,9 @@
+{
+    "url": "http://localhost:4111/api/admin/users",
+    "method": "DELETE",
+    "headers": {
+        "accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3NzM0Njg3MDMsImV4cCI6MTc3MzcyNzkwMywicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJ1c2VybmFtZSI6ImFkbWluIn0.0E51N2xncd4H4SBh8UHBWohiKSeQFAel8D6OVE2EN36nF0dv4bqsB-IKnNLQHQt5qWJyXlEcz1--oPHCxUnnXKlbgKO92C-xKwpvLrHuQ9hDSgCBZWtMw9j2lsgpCVTTB6iKTe2FzFywfmGv4bZdj0by7cTs0CJjPv_pgEQ4NYUa4CWRfqy5yUOdlXucX4-0sK5JHV7DlKM9zag9SDLk9orhchz0Dmioko9aFIrxzRqxLx7svvllwgUT_ZNbUf-bhnxj3QVi-dToMEtuL3HLG_jv2gCqCLvwaFdYRcSfg_h52U2V-_9EefM6EkWeDfu3KS_s-jzicnra7GPhBgjR_FZHHeLj7j_1jZ2xTvSPlR22t92VB4ryqMM8XtRK1vN0BOO7Ktk2AhlXYykMblRUBg8ZxB7VhST6LWf4pzjIhJ0ox6nb_0hdrC02daeLheeAnc9zEw0qsN2anAAgKKz_YEbfKY9dpw7Dxs2Upy1Ftyt6Zt69VedjmFt3TnFliTa2ujhqEwzM8QL2H0IicE1xXFuzb9hfC-fw8hwwC6sahvGvclIU_1o7jDwFnIgstsoA0xO52b3VoTTYKfH8ttcR8ARhtRO85LBMLBwHG4eJP0BeNgA1PgBKUuX3ZYVmBmApF11zSt72Le96kPSLJfg9XRmw-UjK48Vbw3NOM-1x_rE"
+    }
+}

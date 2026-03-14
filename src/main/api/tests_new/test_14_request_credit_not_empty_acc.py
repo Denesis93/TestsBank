@@ -1,5 +1,5 @@
 import pytest
-from constants import AMOUNT_DEPOSIT, CREDIT_AMOUNT, TERM_MONTHS
+from constants import CREDIT_AMOUNT, TERM_MONTHS
 from main.api.models.request_credit_request import RequestCreditRequestModel
 from main.api.requesters.request_credit_requester import CreditPostBaseRequester
 from main.api.specs.response_specs import ResponseSpecs
@@ -9,17 +9,24 @@ from main.api.specs.response_specs import ResponseSpecs
 
 @pytest.mark.api
 class TestRequestDepositCreditAcc:
-
     """Тест запроса кредита с валидными данными"""
 
-    def test_request_credit_acc(self, create_credit_user, request_spec_credit_user, create_credit_account, deposit_credit_account):
+    def test_request_credit_acc(
+        self,
+        create_credit_user,
+        request_spec_credit_user,
+        create_credit_account,
+        deposit_credit_account,
+    ):
 
         # тело запроса на запрос кредита
         # Минимальная сумма кредита - 5000, максимальная 15000
         # период кредита от 1 до 60 месяцев
 
         payload_request_credit = RequestCreditRequestModel(
-            accountId=create_credit_account.id, amount=CREDIT_AMOUNT, termMonths=TERM_MONTHS
+            accountId=create_credit_account.id,
+            amount=CREDIT_AMOUNT,
+            termMonths=TERM_MONTHS,
         )
         # отправка запроса на получение кредита
         response_request_credit = CreditPostBaseRequester(
@@ -31,13 +38,21 @@ class TestRequestDepositCreditAcc:
         assert response_request_credit.credit_id > 0
         assert response_request_credit.amount == CREDIT_AMOUNT
         assert response_request_credit.term_months == TERM_MONTHS
-        assert response_request_credit.balance == CREDIT_AMOUNT + deposit_credit_account.balance
-
+        assert (
+            response_request_credit.balance
+            == CREDIT_AMOUNT + deposit_credit_account.balance
+        )
 
     """Тест запроса кредита с невалидными данными (запрос второго кредита на один счёт)"""
 
     def test_request_credit_acc_invalid(
-        self, create_credit_user, request_spec_credit_user, create_credit_account, deposit_credit_account, payload_request_credit,request_credit
+        self,
+        create_credit_user,
+        request_spec_credit_user,
+        create_credit_account,
+        deposit_credit_account,
+        payload_request_credit,
+        request_credit,
     ):
 
         # отправка запроса на получение второго кредита
