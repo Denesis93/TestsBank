@@ -1,1 +1,0 @@
-{"id":772,"number":"5110344","balance":1111,"transactions":[{"transactionId":589,"type":"transfer_out","amount":-6666,"fromAccountId":772,"toAccountId":773,"createdAt":"2026-03-02 05:26:37","creditId":null},{"transactionId":588,"type":"deposit","amount":7777,"fromAccountId":null,"toAccountId":772,"createdAt":"2026-03-02 05:26:36","creditId":null}]}

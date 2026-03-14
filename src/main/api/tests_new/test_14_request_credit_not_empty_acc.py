@@ -1,5 +1,5 @@
 import pytest
-from constants import AMOUNT_DEPOSIT, CREDIT_AMOUNT, TERM_MONTHS
+from constants import CREDIT_AMOUNT, TERM_MONTHS
 from main.api.models.request_credit_request import RequestCreditRequestModel
 from main.api.requesters.request_credit_requester import CreditPostBaseRequester
 from main.api.specs.response_specs import ResponseSpecs

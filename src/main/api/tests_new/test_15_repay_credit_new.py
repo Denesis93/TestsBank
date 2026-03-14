@@ -1,11 +1,7 @@
 import pytest
-
 from constants import CREDIT_AMOUNT, REPAY_AMOUNT, REPAY_AMOUNT_INVALID
 from main.api.models.repay_credit_request import RepayCreditRequestModel
-from main.api.models.request_credit_request import RequestCreditRequestModel
-from main.api.requesters.create_account_requester import CreateAccountPostBaseRequester
 from main.api.requesters.repay_credit_requester import RepayCreditPostBaseRequester
-from main.api.requesters.request_credit_requester import CreditPostBaseRequester
 from main.api.specs.response_specs import ResponseSpecs
 
 """Тесты погашения кредита"""
