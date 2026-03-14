@@ -1,4 +1,6 @@
 import pytest
+
+from constants import CREDIT_AMOUNT, REPAY_AMOUNT, REPAY_AMOUNT_INVALID
 from main.api.models.repay_credit_request import RepayCreditRequestModel
 from main.api.models.request_credit_request import RequestCreditRequestModel
 from main.api.requesters.create_account_requester import CreateAccountPostBaseRequester
@@ -13,81 +15,30 @@ from main.api.specs.response_specs import ResponseSpecs
 class TestRequestCredit:
     """Тест погашения кредита с валидными данными"""
 
-    def test_repay_credit(self, create_credit_user, request_spec_credit_user):
-
-        # отправка запроса на создание кредитного аккаунта
-        response_create_credit_account = CreateAccountPostBaseRequester(
-            request_spec=request_spec_credit_user,
-            response_spec=ResponseSpecs.created_status(),
-        ).post(None)
-
-        # тело запроса на запрос кредита
-        # Минимальная сумма кредита - 5000, максимальная 15000
-        # период кредита от 1 до 60 месяцев
-        acc_id = response_create_credit_account.id
-        credit_amount = 6666
-        term_months = 22
-
-        # тело запроса на запрос кредита
-        payload_request_credit = RequestCreditRequestModel(
-            accountId=acc_id, amount=credit_amount, termMonths=term_months
-        )
-
-        # отправка запроса на запрос кредита
-        response_request_credit = CreditPostBaseRequester(
-            request_spec=request_spec_credit_user,
-            response_spec=ResponseSpecs.created_status(),
-        ).post(payload_request_credit)
+    def test_repay_credit(self, create_credit_user, request_spec_credit_user, create_credit_account, deposit_credit_account, request_credit):
 
         # тело запроса на погашение кредита
-        credit_id = response_request_credit.credit_id
-        repay_amount = response_request_credit.amount
+
         payload_repay_credit = RepayCreditRequestModel(
-            creditId=credit_id, accountId=acc_id, amount=credit_amount
+            creditId=request_credit.credit_id, accountId=create_credit_account.id, amount=CREDIT_AMOUNT
         )
+
+        # отправка запроса на погашение кредита
         response_repay_credit = RepayCreditPostBaseRequester(
             request_spec=request_spec_credit_user,
             response_spec=ResponseSpecs.ok_status(),
         ).post(payload_repay_credit)
 
-        assert response_repay_credit.creditId == credit_id
-        assert response_repay_credit.amount_deposited == repay_amount
+        assert response_repay_credit.creditId == request_credit.credit_id
+        assert response_repay_credit.amount_deposited == REPAY_AMOUNT
 
     """Тест погашения кредита с невалидными данными (погашение на недостаточную сумму)"""
 
-    def test_repay_credit_invalid(self, create_credit_user, request_spec_credit_user):
-
-        # отправка запроса на создание кредитного аккаунта
-        response_create_credit_account = CreateAccountPostBaseRequester(
-            request_spec=request_spec_credit_user,
-            response_spec=ResponseSpecs.created_status(),
-        ).post(None)
-
-        # тело запроса на запрос кредита
-        # Минимальная сумма кредита - 5000, максимальная 15000
-        # период кредита от 1 до 60 месяцев
-        acc_id = response_create_credit_account.id
-        credit_amount = 5555
-        term_months = 12
-
-        # тело запроса на запрос кредита
-        payload_request_credit = RequestCreditRequestModel(
-            accountId=acc_id, amount=credit_amount, termMonths=term_months
-        )
-
-        # отправка запроса на запрос кредита
-        response_request_credit = CreditPostBaseRequester(
-            request_spec=request_spec_credit_user,
-            response_spec=ResponseSpecs.created_status(),
-        ).post(payload_request_credit)
-
-        # тело запроса на погашение кредита
-        credit_id = response_request_credit.credit_id
-        # repay_amount = response_request_credit.amount
+    def test_repay_credit_invalid(self, create_credit_user, request_spec_credit_user, create_credit_account, request_credit):
 
         # тело запроса на погашение кредита
         payload_repay_credit = RepayCreditRequestModel(
-            creditId=credit_id, accountId=acc_id, amount=5554.99
+            creditId=request_credit.credit_id, accountId=create_credit_account.id, amount=REPAY_AMOUNT_INVALID
         )
 
         # отправка запроса на погашение кредита с недостаточной суммой для погашения
@@ -98,5 +49,5 @@ class TestRequestCredit:
 
         assert (
             response_repay_credit["error"]
-            == f"The amount is not enough. Credit balance: -{response_request_credit.balance:.0f}"
+            == f"The amount is not enough. Credit balance: -{request_credit.balance:.0f}"
         )

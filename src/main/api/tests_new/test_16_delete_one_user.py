@@ -1,5 +1,4 @@
 import pytest
-
 from main.api.models.create_user_request import CreateUserRequestModel
 from main.api.models.get_users_model_response import ResponseGetUsersModel
 from main.api.requesters.create_user_requester import CreateUserPostBaseRequester
@@ -26,7 +25,7 @@ class TestDeleteOneUser:
             response_spec=ResponseSpecs.ok_status(),
         ).delete_all()
 
-        # тело запроса на создание юзера, передающееся через модель
+        # тело запроса на создание юзера
         payload_create_user = CreateUserRequestModel(
             username=user_data["username"],
             password=user_data["password"],
@@ -65,6 +64,7 @@ class TestDeleteOneUser:
         )  # проверяю, что длина списка (количество объектов) равна одному объекту - админу
         assert users[0].username == "admin"
         assert users[0].role == "ROLE_ADMIN"
+
 
     """Тест удаления одного юзера с невалидными данными (удаление несуществующего юзера)"""
 

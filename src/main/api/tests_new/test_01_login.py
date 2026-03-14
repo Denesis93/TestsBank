@@ -11,6 +11,7 @@ from main.api.specs.response_specs import ResponseSpecs
 
 @pytest.mark.api
 class TestLogin:
+
     """Тест логина под админом"""
 
     def test_admin_login(self):
@@ -27,13 +28,7 @@ class TestLogin:
 
     """Тест логина под юзером с валидными данными"""
 
-    def test_user_login(self, user_data, request_spec_admin, payload_create_user):
-
-        # отправка запроса на создание юзера
-        CreateUserPostBaseRequester(
-            request_spec=request_spec_admin,
-            response_spec=ResponseSpecs.ok_status(),
-        ).post(payload_create_user)
+    def test_user_login(self, user_data, create_user):
 
         # тело запроса на логин юзера
         payload_user_login = LoginUserRequestModel(
@@ -52,13 +47,7 @@ class TestLogin:
 
     """Тест логина юзера с неправильным паролем"""
 
-    def test_invalid_login(self, user_data, request_spec_admin, payload_create_user):
-
-        # отправка запроса на создание юзера
-        CreateUserPostBaseRequester(
-            request_spec=request_spec_admin,
-            response_spec=ResponseSpecs.ok_status(),
-        ).post(payload_create_user)
+    def test_invalid_login(self, user_data, create_user):
 
         # тело запроса на логин юзера
         payload_user_login = LoginUserRequestModel(

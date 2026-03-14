@@ -8,6 +8,7 @@ import allure
 
 @pytest.mark.api
 class TestCreateAccount:
+
     """Тест создания банковского счёта с валидными данными"""
 
     def test_create_account(
