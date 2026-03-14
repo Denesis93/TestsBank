@@ -5,7 +5,9 @@ from main.api.models.deposit_request import DepositRequestModel
 from main.api.models.transfer_request import TransferRequestModel
 from main.api.requesters.create_account_requester import CreateAccountPostBaseRequester
 from main.api.requesters.deposit_requester import DepositPostBaseRequester
-from main.api.requesters.transactions_history_requester import TransactionsHistoryRequester
+from main.api.requesters.transactions_history_requester import (
+    TransactionsHistoryRequester,
+)
 from main.api.requesters.transfer_requester import TransferPostBaseRequester
 from main.api.specs.response_specs import ResponseSpecs
 
@@ -16,14 +18,18 @@ from main.api.specs.response_specs import ResponseSpecs
 class TestTransactionHistoryBetweenOtherAccs:
 
     def test_transaction_history_between_other_accs(
-        self, user_data,
+        self,
+        user_data,
         user_2_data,
         request_spec_admin,
         create_user,
         create_user_2,
         request_spec_user,
         request_spec_user_2,
-    create_account, create_account_2, deposit_account, transfer_2
+        create_account,
+        create_account_2,
+        deposit_account,
+        transfer_2,
     ):
 
         # # отправка запроса на создание банковского счёта №1 (донор)
@@ -97,7 +103,6 @@ class TestTransactionHistoryBetweenOtherAccs:
         assert out_transaction.to_account_id == create_account_2.id
         assert out_transaction.amount == -AMOUNT_TO_TRANSFER
 
-
         """Проверка истории транзакций у приёмника"""
         # запрос истории транзакций приёмника
         response_history_acceptor = TransactionsHistoryRequester(
@@ -115,7 +120,8 @@ class TestTransactionHistoryBetweenOtherAccs:
         )
 
         assert (
-            response_history_acceptor.balance == create_account_2.balance + AMOUNT_TO_TRANSFER
+            response_history_acceptor.balance
+            == create_account_2.balance + AMOUNT_TO_TRANSFER
         )
 
         # проверка, что в ответе есть хотя бы 1 объект transaction с типом 'transfer_in'

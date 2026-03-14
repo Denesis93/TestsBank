@@ -14,12 +14,23 @@ from main.api.specs.response_specs import ResponseSpecs
 class TestTransferToOwnAcc:
     """Тест перевода денежных средств с валидными данными"""
 
-    def test_transfer_between_own_acc(self, user_data, request_spec_admin, create_user, request_spec_user, create_account_1, create_account, deposit_account):
+    def test_transfer_between_own_acc(
+        self,
+        user_data,
+        request_spec_admin,
+        create_user,
+        request_spec_user,
+        create_account_1,
+        create_account,
+        deposit_account,
+    ):
 
         # тело для запроса на перевод денежных средств
         # Сумма перевода - минимально 500, максимум - 10000
         transfer_payload = TransferRequestModel(
-            fromAccountId=create_account.id, toAccountId=create_account_1.id, amount=AMOUNT_TO_TRANSFER
+            fromAccountId=create_account.id,
+            toAccountId=create_account_1.id,
+            amount=AMOUNT_TO_TRANSFER,
         )
 
         # отправка запроса на перевод денежных средств
@@ -39,14 +50,23 @@ class TestTransferToOwnAcc:
     # @pytest.mark.parametrize('amount_to_transfer', [])
 
     def test_transfer_between_own_acc_invalid(
-        self, user_data, request_spec_admin, create_user, request_spec_user, deposit_account, create_account, create_account_1
+        self,
+        user_data,
+        request_spec_admin,
+        create_user,
+        request_spec_user,
+        deposit_account,
+        create_account,
+        create_account_1,
     ):
 
         # тело для запроса на перевод денежных средств
         # Сумма перевода - минимально 500, максимум - 10000
-        #amount_to_transfer = 7777.01
+        # amount_to_transfer = 7777.01
         transfer_payload = TransferRequestModel(
-            fromAccountId=create_account.id, toAccountId=create_account_1.id, amount=AMOUNT_TO_TRANSFER_INVALID
+            fromAccountId=create_account.id,
+            toAccountId=create_account_1.id,
+            amount=AMOUNT_TO_TRANSFER_INVALID,
         )
 
         # отправка запроса на перевод денежных средств

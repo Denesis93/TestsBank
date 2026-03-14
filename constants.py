@@ -24,4 +24,3 @@ AMOUNT_DEPOSIT_INVALID = 9000.01
 
 # сумма для пополнения счёта донора
 AMOUNT_DEPOSIT_DONOR = 7777
-

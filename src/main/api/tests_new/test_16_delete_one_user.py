@@ -65,7 +65,6 @@ class TestDeleteOneUser:
         assert users[0].username == "admin"
         assert users[0].role == "ROLE_ADMIN"
 
-
     """Тест удаления одного юзера с невалидными данными (удаление несуществующего юзера)"""
 
     def test_delete_one_user_invalid(self, user_data, request_spec_admin):

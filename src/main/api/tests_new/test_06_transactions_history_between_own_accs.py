@@ -18,9 +18,16 @@ from main.api.specs.response_specs import ResponseSpecs
 class TestTransactionsHistoryBetweenOwnAccs:
 
     def test_transactions_history_between_own_accs(
-        self, user_data, request_spec_admin, create_user, request_spec_user, create_account, deposit_account, create_account_1, transfer
+        self,
+        user_data,
+        request_spec_admin,
+        create_user,
+        request_spec_user,
+        create_account,
+        deposit_account,
+        create_account_1,
+        transfer,
     ):
-
         """Проверка истории транзакций у донора"""
         # запрос истории транзакций донора
         response_history_donor = TransactionsHistoryRequester(
@@ -61,7 +68,8 @@ class TestTransactionsHistoryBetweenOwnAccs:
         )
 
         assert (
-            response_history_acceptor.balance == create_account_1.balance + AMOUNT_TO_TRANSFER
+            response_history_acceptor.balance
+            == create_account_1.balance + AMOUNT_TO_TRANSFER
         )
 
         # проверка, что в ответе есть хотя бы 1 объект transaction с типом 'transfer_in'
@@ -75,14 +83,19 @@ class TestTransactionsHistoryBetweenOwnAccs:
         assert in_transaction.to_account_id == create_account_1.id
         assert in_transaction.amount == AMOUNT_TO_TRANSFER
 
-
     """Тест проверки истории транзакций у несуществующего банковского счёта"""
 
     def test_transactions_history_between_own_accs_invalid(
-        self, user_data, request_spec_admin, create_user, request_spec_user, create_account, deposit_account, create_account_1, transfer
+        self,
+        user_data,
+        request_spec_admin,
+        create_user,
+        request_spec_user,
+        create_account,
+        deposit_account,
+        create_account_1,
+        transfer,
     ):
-
-
         """Проверка истории транзакций у донора"""
         # запрос истории транзакций донора
         response_history_donor = TransactionsHistoryRequester(

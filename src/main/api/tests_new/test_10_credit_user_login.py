@@ -9,7 +9,6 @@ from main.api.specs.response_specs import ResponseSpecs
 
 @pytest.mark.api
 class TestCreditUserLogin:
-
     """Тест логина кредитного юзера с валидными данными"""
 
     def test_credit_user_login(self, create_credit_user, credit_user_data):
@@ -34,7 +33,6 @@ class TestCreditUserLogin:
     def test_invalid_login(
         self, credit_user_data, request_spec_admin, create_credit_user
     ):
-
 
         # тело запроса на логин юзера
         payload_user_login = LoginUserRequestModel(
